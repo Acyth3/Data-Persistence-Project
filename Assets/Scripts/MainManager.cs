@@ -11,12 +11,15 @@ public class MainManager : MonoBehaviour
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text HSText;
+
+    public int HSpoints;
+    public string PlayerName;
+
     public GameObject GameOverText;
     
     private bool m_Started = false;
     private int m_Points;
-    
-    private bool m_GameOver = false;
 
     
     // Start is called before the first frame update
@@ -36,6 +39,12 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        HSpoints = DataManager.Instance.playerHSPoints;
+        PlayerName = DataManager.Instance.playerInputName.text;
+
+        HSText.text = DataManager.Instance.playerHSName + " - Highscore: " + HSpoints;
+        ScoreText.text = PlayerName + " - Score: 0";
     }
 
     private void Update()
@@ -53,24 +62,27 @@ public class MainManager : MonoBehaviour
                 Ball.AddForce(forceDir * 2.0f, ForceMode.VelocityChange);
             }
         }
-        else if (m_GameOver)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            }
-        }
     }
 
     void AddPoint(int point)
     {
         m_Points += point;
-        ScoreText.text = $"Score : {m_Points}";
+        ScoreText.text = DataManager.Instance.playerInputName.text + " - Score: " + m_Points;
     }
 
     public void GameOver()
     {
-        m_GameOver = true;
         GameOverText.SetActive(true);
+
+        if (m_Points > HSpoints)
+        {
+            DataManager.Instance.playerHSPoints = m_Points;
+            DataManager.Instance.playerHSName = PlayerName;
+        }
+    }
+
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

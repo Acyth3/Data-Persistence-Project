@@ -13,7 +13,7 @@ using UnityEditor;
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
-    public Text playerInputName;
+    public string playerInputName;
 
     public string playerHSName;
     public int playerHSPoints;
@@ -31,19 +31,15 @@ public class DataManager : MonoBehaviour
         LoadHighScore();
     }
 
-    public void StartNew()
-    {
-        SceneManager.LoadScene(1);
-    }
-
     public void Exit()
     {
+
+        SaveHighScore();
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
         Application.Quit();
 #endif
-        SaveHighScore();
     }
 
     [System.Serializable]

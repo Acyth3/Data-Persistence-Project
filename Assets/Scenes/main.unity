@@ -635,6 +635,9 @@ MonoBehaviour:
   LineCount: 6
   Ball: {fileID: 177912862}
   ScoreText: {fileID: 188020406}
+  HSText: {fileID: 2078529056}
+  HSpoints: 0
+  PlayerName: 
   GameOverText: {fileID: 474497238}
 --- !u!1 &455529321
 GameObject:
